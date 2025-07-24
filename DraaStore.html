@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Draa Store</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .item {
+      background-color: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    #closedMessage {
+      text-align: center;
+      color: red;
+      font-size: 18px;
+      margin-top: 50px;
+    }
+    h1 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🐼 Draa Store 🐼</h1>
+
+  <div id="store">
+    <div class="item">
+      <h3>GFX 1 Orang</h3>
+      <p>Harga: 6 Robux</p>
+      <button onclick="beli(1)">Beli</button>
+    </div>
+
+    <div class="item">
+      <h3>GFX 1 Orang (2)</h3>
+      <p>Harga: 12 Robux</p>
+      <button onclick="beli(2)">Beli</button>
+    </div>
+
+    <div class="item">
+      <h3>GFX Duo</h3>
+      <p>Harga: 9 Robux</p>
+      <button onclick="beli(3)">Beli</button>
+    </div>
+
+    <div class="item">
+      <h3>GFX Head</h3>
+      <p>Harga: 5 Robux</p>
+      <button onclick="beli(4)">Beli</button>
+    </div>
+  </div>
+
+<div class="item">
+      <h3>GFX Full Avatar + GreenScreen</h3>
+      <p>Harga: 8 Robux</p>
+      <button onclick="beli(5)">Beli</button>
+    </div>
+  </div>
+
+  <div id="closedMessage" class="hidden"></div>
+
+  <script>
+    const gamepasses = {
+      1: "1262964883", // Ganti dengan ID Gamepass Roblox Anda
+      2: "1262826920",
+      3: "1263014721",
+      4: "1262743177",
+      5: "1318398874"
+    };
+
+    function beli(id) {
+      const gamepassId = gamepasses[id];
+      const url = `https://www.roblox.com/game-pass/${gamepassId}/purchase`;
+      window.open(url, "_blank");
+    }
+
+    function cekJamBuka() {
+      const now = new Date();
+      const jam = now.getHours();
+      const hari = now.getDay(); // Minggu = 0, Jumat = 5
+
+      const store = document.getElementById("store");
+      const closedMsg = document.getElementById("closedMessage");
+
+      // Tutup setiap Jumat
+      if (hari === 5) {
+        store.style.display = "none";
+        closedMsg.textContent = "⛔ Maaf, toko tutup hari Jumat.";
+        return;
+      }
+
+      // Jam buka: 12:00 s/d 21:00
+      if (jam >= 12 && jam < 21) {
+        store.style.display = "block";
+        closedMsg.style.display = "none";
+      } else {
+        store.style.display = "none";
+        closedMsg.textContent = "⏰ Toko buka jam 12.00 - 21.00 WIB.";
+      }
+    }
+
+    // Jalankan saat halaman dimuat
+    cekJamBuka();
+
+    // Cek ulang setiap menit
+    setInterval(cekJamBuka, 60000);
+  </script>
+
+</body>
+</html>
